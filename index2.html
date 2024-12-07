@@ -75,12 +75,9 @@
     </style>
 </head>
 <body>
-    <form action="insert.php" method="POST"></form>
     <div class="form-container">
         <h1>Where Hope Converges with Healing</h1>
-        <form>
-            
-
+        <form id="dataForm">
             <div class="form-group">
                 <label for="name">Name of the Candidate</label>
                 <input type="text" id="name" name="name" placeholder="Enter your name">
@@ -94,16 +91,12 @@
                 <input type="tel" id="phone" name="phone" placeholder="Enter your phone number">
             </div>
             <div class="form-group">
-                <label for="optional-phone">Optional Phone Number</label>
-                <input type="tel" id="optional-phone" name="optional-phone" placeholder="Enter an optional phone number">
+                <label for="optional_phone">Optional Phone Number</label>
+                <input type="tel" id="optional-phone" name="optional_phone" placeholder="Enter an optional phone number">
             </div>
             <div class="form-group">
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" placeholder="Enter your email">
-            </div>
-            <div class="form-group">
-                <label for="otp">Verify with OTP</label>
-                <input type="text" id="otp" name="otp" placeholder="Enter OTP">
             </div>
             <div class="form-group">
                 <label for="gender">Gender</label>
@@ -119,14 +112,34 @@
     </div>
 
     <script>
-        // JavaScript for handling the form submission
-        document.querySelector(".form-container form").addEventListener("submit", function (event) {
+        document.getElementById("dataForm").addEventListener("submit", function(event) {
             event.preventDefault(); // Prevent page refresh
-             // Redirect to homepage after login
+            
+            // Gather form data
+            const formData = {
+                name: document.getElementById("name").value,
+                age: document.getElementById("age").value,
+                phone: document.getElementById("phone").value,
+                optionalPhone: document.getElementById("optional-phone").value,
+                email: document.getElementById("email").value,
+                gender: document.getElementById("gender").value
+            };
+
+            // Convert form data to JSON string
+            const jsonData = JSON.stringify(formData, null, 2);
+
+            // Create a Blob from the JSON data
+            const blob = new Blob([jsonData], { type: 'application/json' });
+
+            // Create a download link for the file
+            const a = document.createElement("a");
+            a.href = URL.createObjectURL(blob);
+            a.download = "formData.json"; // File name to download
+            a.click(); // Trigger the download
+
+            // Redirect to home.html after the download
+            window.location.href = "home.html";
         });
     </script>
-    
-
 </body>
-
 </html>

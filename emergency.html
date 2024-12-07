@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emergency Services</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f1f1f1;
+        }
+        .container {
+            margin-top: 30px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .btn-sos {
+            background-color: #ff0000;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+        }
+        .btn-sos:hover {
+            background-color: #cc0000;
+        }
+        .emergency-info {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="text-center text-danger">Emergency Services</h2>
+        <p class="text-center">In case of an emergency, please use the resources below or call for immediate assistance.</p>
+        <div class="text-center">
+            <button class="btn btn-sos" onclick="callEmergency()">🚨 Call Ambulance</button>
+        </div>
+        <div class="emergency-info">
+            <h3>Important Emergency Numbers</h3>
+            <ul>
+                <li>Ambulance: <strong>108</strong></li>
+                <li>Police: <strong>100</strong></li>
+                <li>Fire Brigade: <strong>101</strong></li>
+            </ul>
+            <h3>Nearby Hospitals</h3>
+            <p>Click the button below to find hospitals near you:</p>
+            <button class="btn btn-primary" onclick="findHospitals()">Find Nearby Hospitals</button>
+        </div>
+    </div>
+
+    <script>
+        // Function to call emergency services
+        function callEmergency() {
+            alert("Dialing emergency number 108...");
+            window.location.href = "tel:108"; // This will open the dialer with 108 pre-filled
+        }
+
+        // Function to simulate finding nearby hospitals
+        function findHospitals() {
+            alert("Fetching nearby hospitals...");
+            window.location.href = "nearby-hospitals.html"; // Navigate to a hospitals page (if available)
+        }
+    </script>
+</body>
+</html>

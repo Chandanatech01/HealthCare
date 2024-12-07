@@ -21,7 +21,7 @@
     <!-- Appointment Form -->
     <div class="container my-5">
         <h2 class="text-center mb-4">Book Your Appointment</h2>
-        <form>
+        <form id="appointmentForm">
             <div class="mb-3">
                 <label for="fullName" class="form-label">Full Name</label>
                 <input type="text" class="form-control" id="fullName" required>
@@ -54,5 +54,66 @@
             <button type="submit" class="btn btn-primary w-100">Submit Appointment Request</button>
         </form>
     </div>
+
+    <!-- Appointment Confirmation Modal -->
+    <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmationModalLabel">Appointment Confirmation</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Your appointment is confirmed!</p>
+                    <p>We will contact you soon with further details.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <a href="home.html" class="btn btn-primary">Go to Home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Form submission handler
+        document.getElementById('appointmentForm').addEventListener('submit', function(event) {
+            event.preventDefault();  // Prevent form submission
+
+            // Get form values
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('email').value;
+            const appointmentDate = document.getElementById('appointmentDate').value;
+            const appointmentTime = document.getElementById('appointmentTime').value;
+            const doctorSelect = document.getElementById('doctorSelect').value;
+            const message = document.getElementById('message').value;
+
+            // Create an object to store appointment details
+            const appointmentData = {
+                fullName: fullName,
+                email: email,
+                appointmentDate: appointmentDate,
+                appointmentTime: appointmentTime,
+                doctor: doctorSelect,
+                message: message
+            };
+
+            // Convert the data to JSON
+            const jsonData = JSON.stringify(appointmentData, null, 2);
+
+            // Create a Blob from the JSON data
+            const blob = new Blob([jsonData], { type: 'application/json' });
+
+            // Create a link to download the file
+            const a = document.createElement("a");
+            a.href = URL.createObjectURL(blob);
+            a.download = "appointment.json";  // File name for the appointment
+            a.click();  // Trigger download
+
+            // Display the confirmation modal
+            const confirmationModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
+            confirmationModal.show();
+        });
+    </script>
 </body>
 </html>
