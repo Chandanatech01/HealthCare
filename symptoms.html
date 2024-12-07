@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Symptom Checker</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f1f1f1;
+            color: #333;
+        }
+        .navbar {
+            background-color: #1ba792; /* Green Navbar */
+        }
+        .navbar a, .navbar button {
+            color: #fff !important;
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-top: 50px;
+        }
+        h2 {
+            color: #ff8c00; /* Orange Heading */
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-control, .form-select {
+            border-radius: 5px;
+        }
+        .btn-primary {
+            background-color: #007bff; /* Blue button */
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #004085;
+        }
+        .form-check {
+            margin-right: 20px;
+        }
+        .form-check-label {
+            color: #333;
+        }
+        .selected-symptoms {
+            margin-top: 20px;
+        }
+        .selected-symptom {
+            display: inline-block;
+            background-color: #28a745;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 20px;
+            margin: 5px;
+            font-size: 14px;
+        }
+        .remove-btn {
+            margin-left: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        /* Styling for the checkboxes to display them horizontally */
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: space-between;
+        }
+        .doctor-card {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 15px;
+            background-color: #f9f9f9;
+        }
+        .doctor-card h5 {
+            font-size: 1.2rem;
+        }
+        .doctor-card p {
+            margin: 5px 0;
+        }
+        .doctor-card .btn {
+            background-color: #28a745;
+            border-color: #28a745;
+
+        
+        }
+
+        .navbar .btn {
+    color: #000 !important; /* Set text color to black */
+    background-color: #ffffff; /* Optional: Set background color to white */
+    border: 1px solid #ccc; /* Optional: Add a light border for better visibility */
+    font-weight: bold; /* Optional: Make text bold */
+}
+
+.navbar .btn:hover {
+    background-color: #eaeaea; /* Change background on hover for better feedback */
+    color: #000; /* Keep text color black on hover */
+}
+
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">
+                <img src="https://via.placeholder.com/50" alt="HealthHub Logo" width="50" height="50"> HealthHub
+            </a>
+            <a class="btn btn-light" href="home.html" >Back to Home </a>
+        </div>
+    </nav>
+
+    <!-- Symptom Checker Form -->
+    <div class="container">
+        <h2>Symptom Checker</h2>
+        <form id="symptomForm">
+            <div class="mb-3">
+                <label class="form-label">Select your symptoms</label><br>
+                <!-- Checkboxes displayed horizontally -->
+                <div class="checkbox-group">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="fever" id="fever">
+                        <label class="form-check-label" for="fever">
+                            Fever
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="cough" id="cough">
+                        <label class="form-check-label" for="cough">
+                            Cough
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="headache" id="headache">
+                        <label class="form-check-label" for="headache">
+                            Headache
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="sore-throat" id="sore-throat">
+                        <label class="form-check-label" for="sore-throat">
+                            Sore Throat
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="fatigue" id="fatigue">
+                        <label class="form-check-label" for="fatigue">
+                            Fatigue
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="nausea" id="nausea">
+                        <label class="form-check-label" for="nausea">
+                            Nausea
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="shortness-breath" id="shortness-breath">
+                        <label class="form-check-label" for="shortness-breath">
+                            Shortness of Breath
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Display selected symptoms -->
+            <div class="selected-symptoms" id="selectedSymptoms"></div>
+
+            <div class="mb-3">
+                <label for="age" class="form-label">Your Age</label>
+                <input type="number" class="form-control" id="age" placeholder="Enter your age" required>
+            </div>
+            
+            <div class="mb-3">
+                <label for="severity" class="form-label">Severity of Symptoms</label>
+                <select class="form-select" id="severity" required>
+                    <option value="" disabled selected>Select severity</option>
+                    <option value="mild">Mild</option>
+                    <option value="moderate">Moderate</option>
+                    <option value="severe">Severe</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Find A Doctor</button>
+        </form>
+
+        <!-- Doctors' list -->
+        <div id="doctorList" class="mt-5"></div>
+    </div>
+
+    <script>
+        // Mock data for doctors
+        const doctors = [
+            {
+                name: "Dr. Nithya",
+                specialty: "General Physician",
+                contact: "123-456-7890",
+                available: "9:00 AM - 5:00 PM",
+                symptoms: ["fever", "cough", "fatigue"]
+            },
+            {
+                name: "Dr. Bhanu",
+                specialty: "Pulmonologist",
+                contact: "987-654-3210",
+                available: "10:00 AM - 4:00 PM",
+                symptoms: ["cough", "shortness-breath"]
+            },
+            {
+                name: "Dr. Anand",
+                specialty: "Neurologist",
+                contact: "456-789-0123",
+                available: "8:00 AM - 3:00 PM",
+                symptoms: ["headache", "dizziness"]
+            },
+            {
+                name: "Dr. Raj",
+                specialty: "ENT Specialist",
+                contact: "321-654-9870",
+                available: "9:00 AM - 3:00 PM",
+                symptoms: ["sore-throat", "cough"]
+            },
+            {
+                name: "Dr.Pavan",
+                specialty: "Gastroenterologist",
+                contact: "654-321-7890",
+                available: "9:30 AM - 6:00 PM",
+                symptoms: ["nausea", "fatigue"]
+            },
+            {
+                name: "Dr. Thirupathi ",
+                specialty: "Pulmonologist",
+                contact: "111-222-3333",
+                available: "7:00 AM - 4:00 PM",
+                symptoms: ["shortness-breath", "cough"]
+            }
+            // Add more doctors as needed
+        ];
+
+        // Function to update selected symptoms list
+        function updateSelectedSymptoms() {
+            var selectedSymptomsContainer = document.getElementById("selectedSymptoms");
+            var formElements = document.getElementById("symptomForm").elements;
+            var selectedSymptoms = [];
+
+            // Clear the existing selected symptoms
+            selectedSymptomsContainer.innerHTML = "";
+
+            // Loop through form elements to check which checkboxes are selected
+            for (var i = 0; i < formElements.length; i++) {
+                if (formElements[i].type === "checkbox" && formElements[i].checked) {
+                    selectedSymptoms.push(formElements[i].nextElementSibling.textContent.trim());
+                }
+            }
+
+            // Display each selected symptom as a tag
+            selectedSymptoms.forEach(symptom => {
+                var symptomTag = document.createElement("span");
+                symptomTag.classList.add("selected-symptom");
+                symptomTag.innerHTML = symptom;
+
+                selectedSymptomsContainer.appendChild(symptomTag);
+            });
+        }
+
+        // Add event listeners to update selected symptoms on checkbox change
+        var formElements = document.getElementById("symptomForm").elements;
+        for (var i = 0; i < formElements.length; i++) {
+            if (formElements[i].type === "checkbox") {
+                formElements[i].addEventListener('change', updateSelectedSymptoms);
+            }
+        }
+
+        // Function to filter doctors based on selected symptoms
+        function findDoctors(selectedSymptoms) {
+            const doctorList = document.getElementById("doctorList");
+            doctorList.innerHTML = ""; // Clear previous results
+
+            const filteredDoctors = doctors.filter(doctor => {
+                return selectedSymptoms.some(symptom => doctor.symptoms.includes(symptom));
+            });
+
+            if (filteredDoctors.length > 0) {
+                filteredDoctors.forEach(doctor => {
+                    const doctorCard = document.createElement("div");
+                    doctorCard.classList.add("doctor-card");
+                    doctorCard.innerHTML = `
+                        <h5>${doctor.name} - ${doctor.specialty}</h5>
+                        <p><strong>Contact:</strong> ${doctor.contact}</p>
+                        <p><strong>Availability:</strong> ${doctor.available}</p>
+                        <button class="btn btn-sm">Book Now</button>
+                    `;
+                    doctorList.appendChild(doctorCard);
+                });
+            } else {
+                doctorList.innerHTML = "<p>No doctors found matching your symptoms.</p>";
+            }
+        }
+
+        // Handle form submission
+        document.getElementById("symptomForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            var selectedSymptoms = [];
+            var formElements = document.getElementById("symptomForm").elements;
+
+            for (var i = 0; i < formElements.length; i++) {
+                if (formElements[i].type === "checkbox" && formElements[i].checked) {
+                    selectedSymptoms.push(formElements[i].value);
+                }
+            }
+
+            findDoctors(selectedSymptoms);
+        });
+
+        // Ensure selected symptoms are updated on page load
+        window.onload = updateSelectedSymptoms;
+    </script>
+
+</body>
+</html>
